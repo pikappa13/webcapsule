@@ -47,9 +47,10 @@ htmlcov/
 Thumbs.db
 desktop.ini
 
-# WebCapsule archive (users store capsules here — not for version control)
-webcapsule/
-~/webcapsule/
+# Local archives created during manual testing.
+# Do not ignore the webcapsule/ source package.
+archives/
+capsules/
 
 # SQLite index (regeneratable from the filesystem)
 *.db

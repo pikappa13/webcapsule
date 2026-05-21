@@ -7,7 +7,6 @@ import pytest
 
 from webcapsule import search as search_mod
 
-
 _META = {
     "title": "Climate Change Effects",
     "source_url": "https://example.com/climate",
@@ -116,8 +115,8 @@ def test_reindex_same_capsule_does_not_duplicate(archive):
 
 
 def test_rebuild_index(tmp_path):
-    c1 = _make_capsule(tmp_path, "climate-article", _META, _CONTENT_MD)
-    c2 = _make_capsule(tmp_path, "python-tips", _META2, _CONTENT_MD2)
+    _make_capsule(tmp_path, "climate-article", _META, _CONTENT_MD)
+    _make_capsule(tmp_path, "python-tips", _META2, _CONTENT_MD2)
     count = search_mod.rebuild_index(tmp_path)
     assert count == 2
     all_caps = search_mod.list_all(tmp_path)

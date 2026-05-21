@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "webcapsule"
 version = "0.1.0"
-description = "Turn fragile links into durable knowledge — a local-first web archiver."
+description = "Turn fragile links into durable knowledge - a local-first web archiver."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11"

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from webcapsule.archive import write_capsule, _slugify
+from webcapsule.archive import _slugify, write_capsule
 from webcapsule.parser import ParsedPage
 
 _PAGE = ParsedPage(
@@ -28,7 +28,7 @@ _META = {
     "word_count": 2,
 }
 
-_MARKDOWN = "---\ntitle: \"My Test Article\"\nsource: https://example.com/article\narchived: 2025-05-20T10:00:00Z\n---\n\nHello world."
+_MARKDOWN = '---\ntitle: "My Test Article"\nsource: https://example.com/article\narchived: 2025-05-20T10:00:00Z\n---\n\nHello world.'
 
 _RAW_HTML = "<html><body><p>Hello world.</p></body></html>"
 
@@ -124,7 +124,7 @@ def test_slugify_basic():
 
 
 def test_slugify_special_chars():
-    assert _slugify("Python 3.11 — What's New?") == "python-311-whats-new"
+    assert _slugify("Python 3.11 - What's New?") == "python-311-whats-new"
 
 
 def test_slugify_empty():

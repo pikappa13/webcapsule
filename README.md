@@ -9,9 +9,9 @@
 ---
 
 The web forgets. Articles vanish, links die, platforms shut down.  
-WebCapsule doesn't panic — it saves.
+WebCapsule doesn't panic - it saves.
 
-Drop in a URL. Get back a **permanent, human-readable folder** containing the article, its metadata, a screenshot, and a clean Markdown version — all in open formats, all on your own machine. No cloud. No account. No lock-in.
+Drop in a URL. Get back a **permanent, human-readable folder** containing the article, its metadata, a screenshot, and a clean Markdown version - all in open formats, all on your own machine. No cloud. No account. No lock-in.
 
 If WebCapsule disappears tomorrow, your archive stays readable forever.
 
@@ -24,7 +24,7 @@ If WebCapsule disappears tomorrow, your archive stays readable forever.
 | Save *where* something was | Save *what* it said |
 | Break when links die | Survive forever on your disk |
 | Need the original site | Need nothing but a file explorer |
-| Format changes whenever a platform wants | Markdown and JSON — always the same |
+| Format changes whenever a platform wants | Markdown and JSON - always the same |
 
 ---
 
@@ -34,12 +34,12 @@ If WebCapsule disappears tomorrow, your archive stays readable forever.
 archives/
   climate/
     2026-05-20-the-great-barrier-reef-article/
-      README.md         ← open this first — human-friendly summary
-      content.md        ← full article in clean Markdown
-      original.html     ← exact HTML snapshot
-      screenshot.png    ← full-page screenshot
-      metadata.json     ← structured metadata (title, author, date…)
-      checksum.sha256   ← file integrity hashes
+      README.md         <- open this first - human-friendly summary
+      content.md        <- full article in clean Markdown
+      original.html     <- exact HTML snapshot
+      screenshot.png    <- full-page screenshot
+      metadata.json     <- structured metadata (title, author, date...)
+      checksum.sha256   <- file integrity hashes
 ```
 
 Every file is readable without WebCapsule. Open `content.md` in any text editor. Done.
@@ -48,12 +48,14 @@ Every file is readable without WebCapsule. Open `content.md` in any text editor.
 
 ## Installation
 
+From a local checkout:
+
 ```bash
-pip install webcapsule
+pip install -e ".[dev]"
 playwright install chromium   # one-time browser download (~150 MB)
 ```
 
-That's it. No config files required.
+After a PyPI release, regular users will be able to install with `pip install webcapsule`.
 
 ---
 
@@ -100,6 +102,12 @@ webcapsule export ~/backups/my-archive.zip
 webcapsule export ~/backups/my-archive --format tar
 ```
 
+### Rebuild the search index
+
+```bash
+webcapsule rebuild-index
+```
+
 ---
 
 ## Archive location
@@ -116,13 +124,13 @@ export WEBCAPSULE_ARCHIVE=/mnt/external-drive/my-archive
 
 ## Design principles
 
-1. **Local-first** — everything stays on your machine
-2. **Offline-first** — works without any internet after saving
-3. **Open formats** — Markdown, JSON, HTML, PNG — readable anywhere
-4. **No vendor lock-in** — no accounts, no subscriptions, no APIs
-5. **Human-readable** — a non-technical person can open and understand the archive
-6. **AI optional** — never required, never forced
-7. **Useful even if abandoned** — the archive outlives the tool
+1. **Local-first** - everything stays on your machine
+2. **Offline-first** - works without any internet after saving
+3. **Open formats** - Markdown, JSON, HTML, PNG - readable anywhere
+4. **No vendor lock-in** - no accounts, no subscriptions, no APIs
+5. **Human-readable** - a non-technical person can open and understand the archive
+6. **AI optional** - never required, never forced
+7. **Useful even if abandoned** - the archive outlives the tool
 
 ---
 
@@ -138,7 +146,7 @@ WebCapsule is intentionally modular. Each concern lives in its own file:
 | `metadata.py` | Scrape OpenGraph, JSON-LD, and meta tags |
 | `screenshot.py` | Full-page PNG via Playwright |
 | `archive.py` | Write the capsule folder and compute checksums |
-| `search.py` | SQLite FTS5 local search index |
+| `search.py` | SQLite FTS5 local search index, including body text |
 | `cli.py` | Typer-powered command-line interface |
 
 ---
@@ -146,13 +154,13 @@ WebCapsule is intentionally modular. Each concern lives in its own file:
 ## Tech stack
 
 - **Python 3.11+**
-- [Playwright](https://playwright.dev/python/) — headless browser for JS-heavy pages and screenshots
-- [readability-lxml](https://github.com/buriy/python-readability) — article extraction (same algorithm as Firefox Reader View)
-- [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/) — HTML parsing fallback and metadata scraping
-- [markdownify](https://github.com/matthewwithanm/python-markdownify) — HTML → Markdown conversion
-- [httpx](https://www.python-httpx.org/) — fast HTTP client
-- [Typer](https://typer.tiangolo.com/) + [Rich](https://rich.readthedocs.io/) — CLI and pretty output
-- **SQLite FTS5** — local full-text search (no external search server)
+- [Playwright](https://playwright.dev/python/) - headless browser for JS-heavy pages and screenshots
+- [readability-lxml](https://github.com/buriy/python-readability) - article extraction (same algorithm as Firefox Reader View)
+- [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/) - HTML parsing fallback and metadata scraping
+- [markdownify](https://github.com/matthewwithanm/python-markdownify) - HTML to Markdown conversion
+- [httpx](https://www.python-httpx.org/) - fast HTTP client
+- [Typer](https://typer.tiangolo.com/) + [Rich](https://rich.readthedocs.io/) - CLI and pretty output
+- **SQLite FTS5** - local full-text search (no external search server)
 
 ---
 
@@ -179,6 +187,7 @@ Short version:
 - [x] MVP CLI (save, search, list, export)
 - [x] Full-page screenshots
 - [x] SQLite full-text search
+- [x] Full-body text indexing
 - [x] Checksum integrity
 - [ ] Browser extension
 - [ ] Obsidian vault export
@@ -192,7 +201,7 @@ Short version:
 
 ## Contributing
 
-Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
+Contributions are welcome - see [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
 The single guiding rule: **don't sacrifice simplicity**.
 
@@ -200,4 +209,4 @@ The single guiding rule: **don't sacrifice simplicity**.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).

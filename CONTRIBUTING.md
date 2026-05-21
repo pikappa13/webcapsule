@@ -1,6 +1,6 @@
 # Contributing to WebCapsule
 
-First off — thank you. Seriously.
+First off - thank you. Seriously.
 
 WebCapsule is a small project with a focused goal: make web archiving simple, durable, and human-friendly. If you're here, you probably care about at least one of those things.
 
@@ -10,7 +10,7 @@ WebCapsule is a small project with a focused goal: make web archiving simple, du
 
 > **Don't sacrifice simplicity.**
 
-Every feature, every abstraction, every dependency added to this project must clear that bar. If a change makes WebCapsule harder to understand, harder to install, or harder to use — it's probably not the right change, no matter how clever it is.
+Every feature, every abstraction, every dependency added to this project must clear that bar. If a change makes WebCapsule harder to understand, harder to install, or harder to use - it's probably not the right change, no matter how clever it is.
 
 ---
 
@@ -61,15 +61,15 @@ playwright install chromium
 
 ```
 webcapsule/
-  __init__.py       — package metadata
-  fetcher.py        — retrieve HTML from URLs
-  parser.py         — extract readable content
-  markdown_gen.py   — convert to Markdown
-  metadata.py       — extract structured metadata
-  screenshot.py     — take full-page screenshots
-  archive.py        — write capsule folders
-  search.py         — SQLite FTS5 index
-  cli.py            — Typer command-line interface
+  __init__.py       - package metadata
+  fetcher.py        - retrieve HTML from URLs
+  parser.py         - extract readable content
+  markdown_gen.py   - convert to Markdown
+  metadata.py       - extract structured metadata
+  screenshot.py     - take full-page screenshots
+  archive.py        - write capsule folders
+  search.py         - SQLite FTS5 index
+  cli.py            - Typer command-line interface
 
 tests/
   test_fetcher.py
@@ -86,7 +86,7 @@ Each module does one thing. If you're touching more than two modules for a singl
 - Format with [ruff](https://docs.astral.sh/ruff/) (`ruff format .`)
 - Lint with ruff (`ruff check .`)
 - Type hints on all public functions
-- Comments only when the **why** is non-obvious — never explain *what* the code does
+- Comments only when the **why** is non-obvious - never explain *what* the code does
 
 ---
 

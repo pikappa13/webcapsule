@@ -1,7 +1,6 @@
 """Tests for webcapsule.parser."""
 
-import pytest
-from webcapsule.parser import parse, ParsedPage
+from webcapsule.parser import ParsedPage, parse
 
 SIMPLE_ARTICLE = """
 <html>

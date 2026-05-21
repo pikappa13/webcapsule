@@ -74,4 +74,5 @@ def test_generate_uses_separator():
 def test_generate_archived_is_utc_iso():
     result = generate(_PAGE, "https://example.com/article")
     import re
+
     assert re.search(r"archived: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", result)
