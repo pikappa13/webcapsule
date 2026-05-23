@@ -1,6 +1,6 @@
-# WebCapsule
+# WebCapsule - Local-first web archiver
 
-> **Turn fragile links into durable knowledge.**
+> **Save web pages as Markdown, HTML, screenshots, metadata, and searchable local archives.**
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -8,12 +8,20 @@
 
 ---
 
-The web forgets. Articles vanish, links die, platforms shut down.  
-WebCapsule doesn't panic - it saves.
+WebCapsule is a **local-first web archiving CLI** for researchers, writers, journalists,
+students, and digital preservation workflows. It turns any URL into a durable,
+offline-readable folder with clean Markdown, original HTML, metadata, a full-page
+screenshot, checksums, and SQLite full-text search.
 
-Drop in a URL. Get back a **permanent, human-readable folder** containing the article, its metadata, a screenshot, and a clean Markdown version - all in open formats, all on your own machine. No cloud. No account. No lock-in.
+Use it when bookmarks are not enough: archive articles, preserve web pages, save online
+research, build a personal knowledge base, or keep link rot from destroying your notes.
+Everything stays on your own machine. No cloud. No account. No lock-in.
 
 If WebCapsule disappears tomorrow, your archive stays readable forever.
+
+**Keywords:** web archiver, local web archive, offline web archive, save web pages as
+Markdown, website screenshot CLI, personal archive, digital preservation, link rot,
+Python archiving tool, searchable article archive.
 
 ---
 
@@ -25,6 +33,29 @@ If WebCapsule disappears tomorrow, your archive stays readable forever.
 | Break when links die | Survive forever on your disk |
 | Need the original site | Need nothing but a file explorer |
 | Format changes whenever a platform wants | Markdown and JSON - always the same |
+
+---
+
+## What WebCapsule is good for
+
+- Saving web pages as Markdown for Obsidian, notes, research, and long-term reading
+- Preserving articles before links break, pages disappear, or platforms change
+- Creating a local, searchable archive without a hosted service
+- Capturing full-page screenshots plus original HTML for reference
+- Keeping citation-friendly metadata such as title, author, date, source URL, and tags
+- Exporting an archive in portable ZIP or TAR formats
+
+---
+
+## How it compares
+
+WebCapsule is not a public crawler like the Wayback Machine and it is not a read-it-later
+cloud service like Pocket or Instapaper. It is closer to a personal, local alternative to
+bookmarking: one command saves the content itself in open formats.
+
+If you need a self-hosted web archiving server, tools such as ArchiveBox may be a better
+fit. If you want a small Python CLI that produces human-readable Markdown folders you can
+keep forever, WebCapsule is built for that.
 
 ---
 
@@ -191,6 +222,13 @@ WebCapsule is built for:
 - Digital memory
 
 It is **not** designed to bypass paywalls, violate `robots.txt`, or enable mass scraping. Archive responsibly.
+
+---
+
+## More resources
+
+- [Web archiving use cases](docs/web-archiving-use-cases.md)
+- [Discoverability checklist](docs/discoverability-checklist.md)
 
 ---
 

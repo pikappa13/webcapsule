@@ -5,14 +5,32 @@ build-backend = "hatchling.build"
 [project]
 name = "webcapsule"
 version = "0.1.0"
-description = "Turn fragile links into durable knowledge - a local-first web archiver."
+description = "Local-first web archiver that saves pages as Markdown, HTML, screenshots, metadata, and searchable offline archives."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11"
 authors = [
   { name = "WebCapsule Contributors" }
 ]
-keywords = ["archiving", "web", "offline", "local-first", "knowledge", "cli"]
+keywords = [
+  "archiving",
+  "bookmarks",
+  "cli",
+  "digital-preservation",
+  "html-to-markdown",
+  "knowledge-base",
+  "link-rot",
+  "local-first",
+  "markdown",
+  "offline",
+  "personal-archive",
+  "read-it-later",
+  "screenshot",
+  "search",
+  "web",
+  "web-archiver",
+  "web-archive",
+]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Environment :: Console",
@@ -24,6 +42,8 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Topic :: Internet :: WWW/HTTP",
+  "Topic :: System :: Archiving",
+  "Topic :: Text Processing :: Markup :: Markdown",
   "Topic :: Utilities",
 ]
 
@@ -53,9 +73,11 @@ dev = [
 webcapsule = "webcapsule.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/webcapsule/webcapsule"
-Repository = "https://github.com/webcapsule/webcapsule"
-"Bug Tracker" = "https://github.com/webcapsule/webcapsule/issues"
+Homepage = "https://github.com/pikappa13/webcapsule"
+Repository = "https://github.com/pikappa13/webcapsule"
+Documentation = "https://github.com/pikappa13/webcapsule#readme"
+"Bug Tracker" = "https://github.com/pikappa13/webcapsule/issues"
+"Source Code" = "https://github.com/pikappa13/webcapsule"
 
 [tool.ruff]
 line-length = 100
