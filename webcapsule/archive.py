@@ -21,6 +21,7 @@ import hashlib
 import json
 import re
 import textwrap
+from contextlib import suppress
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -77,6 +78,28 @@ def write_capsule(
     (capsule_dir / "checksum.sha256").write_text(checksums, encoding="utf-8")
 
     return capsule_dir
+
+
+def find_recent_capsule(archive_root: Path, url: str, max_age_hours: int = 24) -> Path | None:
+    """Return a recent capsule for *url*, if one exists."""
+    now = datetime.now(UTC)
+
+    for meta_file in sorted(archive_root.rglob("metadata.json")):
+        with suppress(Exception):
+            meta = json.loads(meta_file.read_text(encoding="utf-8"))
+            if meta.get("source_url") != url:
+                continue
+
+            archived_raw = str(meta.get("archived_date") or "")
+            archived = datetime.fromisoformat(archived_raw.replace("Z", "+00:00"))
+            if archived.tzinfo is None:
+                archived = archived.replace(tzinfo=UTC)
+
+            age_hours = (now - archived.astimezone(UTC)).total_seconds() / 3600
+            if 0 <= age_hours <= max_age_hours:
+                return meta_file.parent
+
+    return None
 
 
 # ---------------------------------------------------------------------------

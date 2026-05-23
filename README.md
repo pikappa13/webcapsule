@@ -78,7 +78,15 @@ webcapsule save https://example.com/spa --browser
 
 # Skip screenshot (faster)
 webcapsule save https://example.com/article --no-screenshot
+
+# Check what would be archived without writing files
+webcapsule save https://example.com/article --dry-run
+
+# Save the same URL again even if it was archived recently
+webcapsule save https://example.com/article --force
 ```
+
+By default, WebCapsule skips re-saving the same URL if it was archived in the last 24 hours.
 
 ### Search your archive
 
@@ -94,6 +102,14 @@ webcapsule search "ocean AND reef"      # boolean operators
 webcapsule list
 webcapsule list --limit 10
 ```
+
+### Open a capsule
+
+```bash
+webcapsule open ~/webcapsule/general/2026-05-20-example-article
+```
+
+If the path is a capsule folder, WebCapsule opens its `README.md`.
 
 ### Export your archive
 
@@ -189,6 +205,7 @@ Short version:
 - [x] SQLite full-text search
 - [x] Full-body text indexing
 - [x] Checksum integrity
+- [x] Recent-URL deduplication
 - [ ] Browser extension
 - [ ] Obsidian vault export
 - [ ] Wayback Machine integration

@@ -39,7 +39,13 @@ def fetch(url: str, force_browser: bool = False) -> str:
             return html
 
     # The page is likely JavaScript-rendered - use a real browser.
-    return _fetch_browser(url)
+    try:
+        return _fetch_browser(url)
+    except Exception as exc:
+        raise RuntimeError(
+            f"Could not fetch {url}. The HTTP response was missing or too short, "
+            "and the browser fallback failed."
+        ) from exc
 
 
 def _fetch_simple(url: str) -> str | None:

@@ -1,11 +1,12 @@
 """Tests for webcapsule.archive."""
 
 import json
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
 
-from webcapsule.archive import _slugify, write_capsule
+from webcapsule.archive import _slugify, find_recent_capsule, write_capsule
 from webcapsule.parser import ParsedPage
 
 _PAGE = ParsedPage(
@@ -129,3 +130,27 @@ def test_slugify_special_chars():
 
 def test_slugify_empty():
     assert _slugify("") == "untitled"
+
+
+def test_find_recent_capsule_returns_recent_match(tmp_path):
+    caps = tmp_path / "general" / "recent"
+    caps.mkdir(parents=True)
+    meta = {
+        "source_url": "https://example.com/article",
+        "archived_date": datetime.now(UTC).isoformat(),
+    }
+    (caps / "metadata.json").write_text(json.dumps(meta), encoding="utf-8")
+
+    assert find_recent_capsule(tmp_path, "https://example.com/article") == caps
+
+
+def test_find_recent_capsule_ignores_old_match(tmp_path):
+    caps = tmp_path / "general" / "old"
+    caps.mkdir(parents=True)
+    meta = {
+        "source_url": "https://example.com/article",
+        "archived_date": (datetime.now(UTC) - timedelta(hours=25)).isoformat(),
+    }
+    (caps / "metadata.json").write_text(json.dumps(meta), encoding="utf-8")
+
+    assert find_recent_capsule(tmp_path, "https://example.com/article") is None

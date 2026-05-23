@@ -31,15 +31,15 @@ The absolute minimum needed to call this a tool, not a script.
 
 Making the MVP production-grade for real daily use.
 
-- [ ] End-to-end test suite (pytest + httpx mock)
-- [ ] GitHub Actions CI (lint + test on Python 3.11, 3.12, 3.13)
-- [ ] Pre-commit hooks (ruff, mypy)
+- [x] Automated pytest suite (module coverage + CLI smoke tests)
+- [x] GitHub Actions CI (lint + test on Python 3.11, 3.12, 3.13)
+- [x] Pre-commit hooks (ruff, mypy)
 - [x] `webcapsule rebuild-index` command to re-index from scratch
-- [ ] `webcapsule open PATH` command to open a capsule in the default browser
-- [ ] Graceful error messages (network timeout, JS render failure, etc.)
-- [ ] `--dry-run` flag for `save` (fetch and parse without writing)
-- [ ] Progress bar for large exports
-- [ ] Capsule deduplication (skip re-saving the same URL within 24 hours)
+- [x] `webcapsule open PATH` command to open a capsule in the default application
+- [x] Graceful error messages (network timeout, JS render failure, etc.)
+- [x] `--dry-run` flag for `save` (fetch and parse without writing)
+- [x] Progress indicator for exports
+- [x] Capsule deduplication (skip re-saving the same URL within 24 hours)
 - [ ] Publish to PyPI
 
 ---

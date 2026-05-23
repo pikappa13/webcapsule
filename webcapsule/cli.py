@@ -6,16 +6,20 @@ Four commands, each self-contained and easy to script:
   webcapsule save URL [--collection NAME] [--no-screenshot] [--tag TAG]...
   webcapsule search QUERY [--limit N]
   webcapsule list [--limit N]
+  webcapsule open PATH
   webcapsule export PATH [--format zip|tar]
 """
 
 import os
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 from typing import Annotated
 
 import typer
 from rich.console import Console
+from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 
 from webcapsule import (
@@ -47,6 +51,16 @@ def _archive_root() -> Path:
     return root
 
 
+def _open_path(path: Path) -> None:
+    """Open *path* using the platform default application."""
+    if sys.platform.startswith("win"):
+        os.startfile(path)  # type: ignore[attr-defined]
+        return
+
+    opener = "open" if sys.platform == "darwin" else "xdg-open"
+    subprocess.run([opener, str(path)], check=True)
+
+
 # ---------------------------------------------------------------------------
 # webcapsule save
 # ---------------------------------------------------------------------------
@@ -67,11 +81,27 @@ def save(
     force_browser: Annotated[
         bool, typer.Option("--browser", help="Force headless browser (useful for SPAs).")
     ] = False,
+    dry_run: Annotated[
+        bool, typer.Option("--dry-run", help="Fetch and parse without writing a capsule.")
+    ] = False,
+    force: Annotated[
+        bool, typer.Option("--force", help="Save even if this URL was archived recently.")
+    ] = False,
 ) -> None:
     """Save a web page as a self-contained knowledge capsule."""
 
     root = _archive_root()
     tags = tag or []
+
+    if not force and not dry_run:
+        recent = archive.find_recent_capsule(root, url)
+        if recent:
+            console.print(
+                "[yellow]Skipped:[/] this URL was archived in the last 24 hours.\n"
+                f"  [dim]{recent}[/]\n"
+                "Use [bold]--force[/] to save it again."
+            )
+            raise typer.Exit()
 
     try:
         with console.status(f"[bold cyan]Fetching[/] {url}"):
@@ -100,6 +130,13 @@ def save(
     except Exception as exc:
         console.print(f"[bold red]Error:[/] Markdown generation failed\n  {exc}")
         raise typer.Exit(code=1) from None
+
+    if dry_run:
+        console.print("[bold green]OK Dry run complete[/]")
+        console.print(f"  Title: {meta.get('title') or page.title or '-'}")
+        console.print(f"  Words: {meta.get('word_count', 0)}")
+        console.print("  No files written.")
+        raise typer.Exit()
 
     screenshot_bytes: bytes | None = None
     if not no_screenshot:
@@ -216,6 +253,34 @@ def list_cmd(
 
 
 # ---------------------------------------------------------------------------
+# webcapsule open
+# ---------------------------------------------------------------------------
+
+
+@app.command("open")
+def open_cmd(
+    path: Annotated[Path, typer.Argument(help="Capsule directory or file to open.")],
+) -> None:
+    """Open a capsule in the default application."""
+
+    target = path.expanduser()
+    if not target.exists():
+        console.print(f"[red]Error:[/] path does not exist: {target}")
+        raise typer.Exit(code=1)
+
+    if target.is_dir() and (target / "README.md").exists():
+        target = target / "README.md"
+
+    try:
+        _open_path(target)
+    except Exception as exc:
+        console.print(f"[red]Error:[/] could not open {target}\n  {exc}")
+        raise typer.Exit(code=1) from None
+
+    console.print(f"[bold green]OK Opened:[/] {target}")
+
+
+# ---------------------------------------------------------------------------
 # webcapsule export
 # ---------------------------------------------------------------------------
 
@@ -237,7 +302,13 @@ def export(
     base = str(output).removesuffix(f".{fmt}").removesuffix(".tar.gz")
     fmt_arg = "gztar" if fmt == "tar" else "zip"
 
-    with console.status(f"[bold cyan]Exporting archive as {fmt}..."):
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[bold cyan]{task.description}"),
+        console=console,
+        transient=True,
+    ) as progress:
+        progress.add_task(f"Exporting archive as {fmt}...", total=None)
         result = shutil.make_archive(base, fmt_arg, root_dir=root.parent, base_dir=root.name)
 
     console.print(f"[bold green]OK Exported:[/] {result}")
@@ -275,3 +346,7 @@ def main(
         raise typer.Exit()
     if ctx.invoked_subcommand is None:
         console.print(ctx.get_help())
+
+
+if __name__ == "__main__":
+    app()
