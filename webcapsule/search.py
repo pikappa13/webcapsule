@@ -155,7 +155,7 @@ def search(archive_root: Path, query: str, limit: int = 20) -> list[dict[str, An
                 c.url,
                 c.path,
                 c.archived,
-                snippet(capsules_fts, 1, '[', ']', '...', 12) AS snippet
+                snippet(capsules_fts, -1, '[', ']', '...', 12) AS snippet
             FROM capsules_fts
             JOIN capsules c ON capsules_fts.rowid = c.id
             WHERE capsules_fts MATCH ?
