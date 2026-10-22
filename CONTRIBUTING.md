@@ -41,7 +41,7 @@ Open an issue first and describe the use case. We'll talk about it before anyone
 ## Setting up a dev environment
 
 ```bash
-git clone https://github.com/your-org/webcapsule.git
+git clone https://github.com/pikappa13/webcapsule.git
 cd webcapsule
 
 # Create and activate a virtual environment
